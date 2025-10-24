@@ -14,7 +14,14 @@
       "Bash(npm run build)",
       "Bash(git checkout frontend/src/components/ProductCard.tsx)",
       "Bash(git remote remove:*)",
-      "Bash(git remote add:*)"
+      "Bash(git remote add:*)",
+      "Bash(cat:*)",
+      "Bash(npm install:*)",
+      "Bash(npx prisma migrate dev:*)",
+      "Bash(npm create:*)",
+      "Bash(npx cap init)",
+      "Bash(npx cap init:*)",
+      "Bash(npx cap add android)"
     ],
     "deny": [],
     "ask": []

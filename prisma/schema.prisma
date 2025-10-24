@@ -9,23 +9,51 @@ datasource db {
 
 model User {
   id          Int      @id @default(autoincrement())
-  telegramId  String   @unique
+
+  // Auth fields (новая система + обратная совместимость)
+  email       String?  @unique              // Для mobile app
+  password    String?                       // bcrypt hash (null для Telegram users)
+  telegramId  String?  @unique              // Опционально, для обратной совместимости
+  isVerified  Boolean  @default(false)      // Email verification
+
+  // Profile
   username    String?
   firstName   String?
   lastName    String?
+  name        String?                       // Full name для mobile app
+  phone       String?                       // Phone number
   avatarUrl   String?
-  role        String   @default("user") // "user" | "admin"
+
+  // System
+  role        String   @default("user")     // "user" | "admin"
   isBanned    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  lastLoginAt DateTime?                     // Track last login
 
   // Relations
-  orders        Order[]
-  cart          Cart?
-  favorites     Favorite[]
-  searchHistory SearchHistory[]
+  orders         Order[]
+  cart           Cart?
+  favorites      Favorite[]
+  searchHistory  SearchHistory[]
+  refreshTokens  RefreshToken[]             // JWT refresh tokens
 
+  @@index([email])
   @@map("users")
+}
+
+// JWT Refresh tokens table
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
 }
 
 model Product {
