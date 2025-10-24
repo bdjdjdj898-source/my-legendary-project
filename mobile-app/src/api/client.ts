@@ -39,17 +39,24 @@ export function buildQueryString(params: Record<string, any>): string {
   return queryParams.toString();
 }
 
-let initData: string | null = null;
-export function setTelegramInitData(v: string | null) { initData = v; }
+// JWT token storage
+let accessToken: string | null = null;
+
+export function setAccessToken(token: string | null) {
+  accessToken = token;
+}
+
+export function getAccessToken(): string | null {
+  return accessToken;
+}
 
 export async function apiFetch(path: string, options: RequestInit = {}) {
   const headers = new Headers(options.headers || {});
   headers.set('Content-Type', 'application/json');
-  if (initData) headers.set('x-telegram-init-data', initData);
 
-  // Add debug auth header in DEV mode with secret
-  if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_AUTH_SECRET) {
-    headers.set('x-debug-auth', import.meta.env.VITE_DEBUG_AUTH_SECRET);
+  // Add JWT token to Authorization header
+  if (accessToken) {
+    headers.set('Authorization', `Bearer ${accessToken}`);
   }
 
   const res = await fetch(path, { ...options, headers });
