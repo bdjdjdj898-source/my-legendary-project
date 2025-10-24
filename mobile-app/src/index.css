@@ -1,68 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Variables for Theme System */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  /* Light theme */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --card: #f8fafc;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e6e7eb;
+  --accent: #2b8cff;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* Legacy support */
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-text: var(--text);
+  --color-text-secondary: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-error: #ef4444;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* UI Constants */
+  --radius: 12px;
+  --transition: 0.2s ease;
+
+  transition: background-color 0.3s, color 0.3s;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* Dark theme - based on screenshot palette */
+.dark {
+  --bg: #000000;                /* основной фон - чистый черный */
+  --surface: #1C4A6E;           /* голубые блоки (темно-синий) */
+  --card: #1A1A1A;              /* фон карточек товаров (очень темно-серый) */
+  --text: #FFFFFF;              /* основной текст - белый */
+  --muted: #9CA3AF;             /* вторичный текст (светло-серый) */
+  --border: #2A2A2A;            /* границы/разделители */
+  --accent: #3B82F6;            /* активные элементы - яркий синий */
+  --accent-weak: rgba(59, 130, 246, 0.1); /* subtle highlights */
+
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-text: var(--text);
+  --color-text-secondary: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-error: #f87171;
 }
-a:hover {
-  color: #535bf2;
+
+[data-theme="dark"] {
+  --bg: #000000;                /* основной фон - чистый черный */
+  --surface: #1C4A6E;           /* голубые блоки (темно-синий) */
+  --card: #1A1A1A;              /* фон карточек товаров (очень темно-серый) */
+  --text: #FFFFFF;              /* основной текст - белый */
+  --muted: #9CA3AF;             /* вторичный текст (светло-серый) */
+  --border: #2A2A2A;            /* границы/разделители */
+  --accent: #3B82F6;            /* активные элементы - яркий синий */
+  --accent-weak: rgba(59, 130, 246, 0.1); /* subtle highlights */
+
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-text: var(--text);
+  --color-text-secondary: var(--muted);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-error: #f87171;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Ensure root div takes full height */
+#root {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Smooth Transitions for Theme Switching */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Scrollbar Utilities */
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  a:hover {
-    color: #747bff;
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
-  button {
-    background-color: #f9f9f9;
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
