@@ -48,10 +48,16 @@ function AppContent() {
               isAuthenticated ? <Navigate to="/" replace /> : <Register />
             } />
 
-            {/* Main app routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/search" element={<Search />} />
+            {/* Main app routes - redirect to login if not authenticated */}
+            <Route path="/" element={
+              isAuthenticated ? <Home /> : <Navigate to="/login" replace />
+            } />
+            <Route path="/product/:id" element={
+              isAuthenticated ? <ProductDetail /> : <Navigate to="/login" replace />
+            } />
+            <Route path="/search" element={
+              isAuthenticated ? <Search /> : <Navigate to="/login" replace />
+            } />
 
             {/* Protected routes */}
             <Route path="/favorites" element={<RequireAuth><Favorites /></RequireAuth>} />

@@ -2,15 +2,19 @@
 
 export interface User {
   id: number;
-  telegramId: string;
+  email: string;
+  name: string | null;
+  role: 'admin' | 'user';
+  isVerified: boolean;
+  createdAt: string;
+  // Optional fields for backward compatibility with Telegram users
+  telegramId?: string;
   username?: string;
   firstName?: string;
   lastName?: string;
   avatarUrl?: string;
-  role: 'admin' | 'user';
-  isBanned: boolean;
-  createdAt: string;
-  updatedAt: string;
+  isBanned?: boolean;
+  updatedAt?: string;
 }
 
 export interface Product {
@@ -88,30 +92,25 @@ export interface Order {
 }
 
 // Error codes from backend
-export enum ErrorCode {
+export type ErrorCode =
   // Authentication and authorization
-  AUTH_REQUIRED = 'AUTH_REQUIRED',
-  AUTH_INVALID = 'AUTH_INVALID',
-  ACCESS_DENIED = 'ACCESS_DENIED',
-
+  | 'AUTH_REQUIRED'
+  | 'AUTH_INVALID'
+  | 'ACCESS_DENIED'
   // Resources
-  NOT_FOUND = 'NOT_FOUND',
-  ALREADY_EXISTS = 'ALREADY_EXISTS',
-
+  | 'NOT_FOUND'
+  | 'ALREADY_EXISTS'
   // Validation
-  VALIDATION_ERROR = 'VALIDATION_ERROR',
-  INVALID_INPUT = 'INVALID_INPUT',
-
+  | 'VALIDATION_ERROR'
+  | 'INVALID_INPUT'
   // Business logic
-  CART_EMPTY = 'CART_EMPTY',
-  PRODUCT_UNAVAILABLE = 'PRODUCT_UNAVAILABLE',
-  ORDER_NOT_PROCESSABLE = 'ORDER_NOT_PROCESSABLE',
-
+  | 'CART_EMPTY'
+  | 'PRODUCT_UNAVAILABLE'
+  | 'ORDER_NOT_PROCESSABLE'
   // Server errors
-  INTERNAL_ERROR = 'INTERNAL_ERROR',
-  DATABASE_ERROR = 'DATABASE_ERROR',
-  SERVICE_UNAVAILABLE = 'SERVICE_UNAVAILABLE'
-}
+  | 'INTERNAL_ERROR'
+  | 'DATABASE_ERROR'
+  | 'SERVICE_UNAVAILABLE';
 
 // Base response structure
 interface BaseResponse {

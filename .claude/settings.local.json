@@ -22,7 +22,10 @@
       "Bash(npx cap init)",
       "Bash(npx cap init:*)",
       "Bash(npx cap add android)",
-      "Bash(npx tailwindcss:*)"
+      "Bash(npx tailwindcss:*)",
+      "Bash(npx cap sync)",
+      "Bash(npx cap open:*)",
+      "Bash(npx cap sync android)"
     ],
     "deny": [],
     "ask": []

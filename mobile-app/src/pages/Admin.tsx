@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 
 const Admin: React.FC = () => {
-  const { user, telegramUser } = useAuth();
+  const { user } = useAuth();
 
   if (user?.role !== 'admin') {
     return (
@@ -83,7 +83,7 @@ const Admin: React.FC = () => {
 
         <div className="mt-8 bg-white rounded-lg shadow p-6">
           <p className="text-gray-600">
-            Добро пожаловать в админ-панель, {user?.firstName || telegramUser?.first_name}!
+            Добро пожаловать в админ-панель, {user?.name || user?.email}!
           </p>
           <p className="text-sm text-gray-500 mt-2">
             Выберите раздел для управления системой.

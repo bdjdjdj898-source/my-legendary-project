@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
-import { Order, OrderStatus, ORDER_STATUS_META } from '../types/api';
+import type { Order, OrderStatus } from '../types/api';
+import { ORDER_STATUS_META } from '../types/api';
 
 const AdminOrders: React.FC = () => {
   const { user } = useAuth();
@@ -41,7 +42,7 @@ const AdminOrders: React.FC = () => {
         // Update local state
         setOrders(prev => prev.map(order =>
           order.id === orderId
-            ? { ...order, status: newStatus }
+            ? { ...order, status: newStatus as OrderStatus }
             : order
         ));
       }

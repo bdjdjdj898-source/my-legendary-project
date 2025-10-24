@@ -32,34 +32,40 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Вход в аккаунт
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Или{' '}
-            <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
-              создайте новый аккаунт
-            </Link>
-          </p>
-        </div>
+    <div className="min-h-screen flex flex-col bg-white">
+      {/* Header with logo */}
+      <div className="flex-1 flex flex-col justify-center px-6 py-12">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          {/* Logo/Icon */}
+          <div className="flex justify-center mb-8">
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+              <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
+          </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {/* Title */}
+          <h1 className="text-center text-2xl font-semibold text-gray-900 mb-2">
+            Vintage Shop
+          </h1>
+          <p className="text-center text-sm text-gray-500 mb-8">
+            Войдите, чтобы продолжить
+          </p>
+
+          {/* Error message */}
           {(error || authError) && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-800">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600 text-center">
                 {error || authError}
-              </div>
+              </p>
             </div>
           )}
 
-          <div className="rounded-md shadow-sm -space-y-px">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-3">
+            {/* Email input */}
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email
-              </label>
               <input
                 id="email"
                 name="email"
@@ -68,14 +74,14 @@ export default function Login() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Email адрес"
+                className="block w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                placeholder="Email"
+                disabled={isLoading}
               />
             </div>
+
+            {/* Password input */}
             <div>
-              <label htmlFor="password" className="sr-only">
-                Пароль
-              </label>
               <input
                 id="password"
                 name="password"
@@ -84,22 +90,39 @@ export default function Login() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="block w-full px-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 placeholder="Пароль"
+                disabled={isLoading}
               />
             </div>
-          </div>
 
-          <div>
+            {/* Submit button */}
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
             >
               {isLoading ? 'Вход...' : 'Войти'}
             </button>
+          </form>
+
+          {/* Register link */}
+          <div className="mt-6 text-center">
+            <Link
+              to="/register"
+              className="text-blue-500 hover:text-blue-600 font-medium transition-colors"
+            >
+              Создать аккаунт
+            </Link>
           </div>
-        </form>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="pb-8 px-6">
+        <p className="text-center text-xs text-gray-400">
+          © 2025 Vintage Shop
+        </p>
       </div>
     </div>
   );

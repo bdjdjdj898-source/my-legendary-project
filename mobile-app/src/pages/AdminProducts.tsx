@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
-import { Product, CreateProductData, UploadProgress, CloudinarySignature } from '../types/api';
+import type { Product, CreateProductData, UploadProgress, CloudinarySignature } from '../types/api';
 
 const AdminProducts: React.FC = () => {
   const { user } = useAuth();

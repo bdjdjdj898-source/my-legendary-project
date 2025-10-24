@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard';
 import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
-import { Product } from '../types/api';
+import type { Product } from '../types/api';
 import { Heart } from 'lucide-react';
 
 const Favorites: React.FC = () => {

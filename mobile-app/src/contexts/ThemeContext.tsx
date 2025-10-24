@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { initTelegramWebApp } from '../utils/telegram';
 
 type Theme = 'light' | 'dark';
 
@@ -22,35 +21,25 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [theme, setTheme] = useState<Theme>('light');
 
   useEffect(() => {
-    // Initialize theme from Telegram colorScheme
-    try {
-      const telegramApp = initTelegramWebApp();
-      const telegramTheme = telegramApp.colorScheme === 'dark' ? 'dark' : 'light';
-      setTheme(telegramTheme);
-      updateDocumentClass(telegramTheme);
-    } catch (error) {
-      console.warn('Could not get Telegram color scheme, using light theme:', error);
-      setTheme('light');
-      updateDocumentClass('light');
-    }
+    // Initialize theme from system preference or localStorage
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+    setTheme(initialTheme);
+    updateDocumentClass(initialTheme);
 
-    // Listen for Telegram theme changes if available
-    const tg = (window as any).Telegram?.WebApp;
-    if (tg && tg.onEvent) {
-      const handleThemeChanged = () => {
-        const newTheme = tg.colorScheme === 'dark' ? 'dark' : 'light';
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
         setTheme(newTheme);
         updateDocumentClass(newTheme);
-      };
+      }
+    };
 
-      tg.onEvent('themeChanged', handleThemeChanged);
-
-      return () => {
-        if (tg.offEvent) {
-          tg.offEvent('themeChanged', handleThemeChanged);
-        }
-      };
-    }
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   const updateDocumentClass = (newTheme: Theme) => {
@@ -68,6 +57,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     updateDocumentClass(newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
   const value = {

@@ -3,9 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../api/client';
 import { useCart } from '../contexts/CartContext';
 import { useSwipe } from '../hooks/useSwipe';
-import { useTelegramBackButton, useTelegramMainButton, useTelegramSettingsButton } from '../hooks/useTelegramUI';
 import Header from '../components/Header';
-import { Product } from '../types/api';
+import type { Product } from '../types/api';
 import { formatCurrency } from '../utils/format';
 
 const ProductDetail: React.FC = () => {
@@ -71,23 +70,7 @@ const ProductDetail: React.FC = () => {
     fetchProduct();
   }, [id]);
 
-  // Telegram UI кнопки
-  useTelegramBackButton(() => navigate(-1));
-  useTelegramSettingsButton(() => console.log('Settings clicked'));
-
-  // Telegram Main Button для добавления в корзину
-  useTelegramMainButton(
-    !showQuantityControls
-      ? 'Добавить в корзину'
-      : `Перейти в корзину · ${formatCurrency((product?.price || 0) * quantity)}`,
-    handleAddToCart,
-    {
-      color: '#3b82f6',
-      textColor: '#ffffff',
-      isActive: !isAddingToCart,
-      isProgressVisible: isAddingToCart
-    }
-  );
+  // Removed Telegram UI buttons for cross-platform compatibility
 
   const handleImageNavigation = (direction: 'prev' | 'next') => {
     if (!product?.images) return;

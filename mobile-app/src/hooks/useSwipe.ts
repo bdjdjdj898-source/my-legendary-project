@@ -30,7 +30,7 @@ export const useSwipe = (
 
   const minSwipeDistance = threshold;
 
-  const onTouchStart = useCallback((e: TouchEvent | MouseEvent) => {
+  const onTouchStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     const touch = 'touches' in e ? e.touches[0] : e;
     touchStartX.current = touch.clientX;
     touchStartY.current = touch.clientY;
@@ -38,7 +38,7 @@ export const useSwipe = (
     touchEndY.current = touch.clientY;
   }, []);
 
-  const onTouchMove = useCallback((e: TouchEvent | MouseEvent) => {
+  const onTouchMove = useCallback((e: React.TouchEvent | React.MouseEvent) => {
     if (preventDefaultTouchmoveEvent) {
       e.preventDefault();
     }
@@ -47,7 +47,7 @@ export const useSwipe = (
     touchEndY.current = touch.clientY;
   }, [preventDefaultTouchmoveEvent]);
 
-  const onTouchEnd = useCallback(() => {
+  const onTouchEnd = useCallback((e?: React.TouchEvent | React.MouseEvent) => {
     if (!touchStartX.current || !touchEndX.current) return;
 
     const distanceX = touchStartX.current - touchEndX.current;

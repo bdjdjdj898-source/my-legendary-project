@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
 import { useAuth } from '../contexts/AuthContext';
-import { Order, OrderStatus, ORDER_STATUS_META } from '../types/api';
-import { Link } from 'react-router-dom';
+import type { Order, OrderStatus } from '../types/api';
+import { ORDER_STATUS_META } from '../types/api';
 
 const Orders: React.FC = () => {
   const { user } = useAuth();

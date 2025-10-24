@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
-import { Cart, CartItem } from '../types/api';
+import type { Cart } from '../types/api';
 
 interface CartContextType {
   cart: Cart | null;

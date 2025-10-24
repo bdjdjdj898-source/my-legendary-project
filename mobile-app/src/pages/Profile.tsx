@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 
 const Profile: React.FC = () => {
-  const { user, telegramUser } = useAuth();
+  const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
@@ -33,15 +33,15 @@ const Profile: React.FC = () => {
         <div className="bg-card dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
           <div className="flex items-center space-x-4 mb-6">
             <div className="w-16 h-16 bg-accent dark:bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-              {telegramUser?.first_name?.[0] || user?.firstName?.[0] || 'U'}
+              {user?.name?.[0] || user?.email?.[0] || 'U'}
             </div>
             <div>
               <h2 className="text-xl font-semibold text-text dark:text-white">
-                {telegramUser?.first_name || user?.firstName} {telegramUser?.last_name || user?.lastName}
+                {user?.name || user?.email}
               </h2>
-              {(telegramUser?.username || user?.username) && (
+              {user?.email && (
                 <p className="text-text-secondary dark:text-gray-400">
-                  @{telegramUser?.username || user?.username}
+                  {user.email}
                 </p>
               )}
             </div>
@@ -49,9 +49,9 @@ const Profile: React.FC = () => {
 
           <div className="space-y-3">
             <div className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-700">
-              <span className="text-text-secondary dark:text-gray-400">Telegram ID</span>
+              <span className="text-text-secondary dark:text-gray-400">ID пользователя</span>
               <span className="text-text dark:text-white font-medium">
-                {telegramUser?.id || user?.telegramId}
+                {user?.id}
               </span>
             </div>
 
@@ -71,14 +71,12 @@ const Profile: React.FC = () => {
               </span>
             </div>
 
-            {telegramUser?.is_premium && (
-              <div className="flex justify-between items-center py-2">
-                <span className="text-text-secondary dark:text-gray-400">Статус</span>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                  ⭐ Telegram Premium
-                </span>
-              </div>
-            )}
+            <div className="flex justify-between items-center py-2">
+              <span className="text-text-secondary dark:text-gray-400">Статус</span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                {user?.isVerified ? '✓ Подтвержден' : '⏳ Не подтвержден'}
+              </span>
+            </div>
           </div>
         </div>
 

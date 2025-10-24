@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { setAccessToken } from '../api/client';
 import { login as apiLogin, register as apiRegister, getCurrentUser, refreshToken as apiRefreshToken } from '../api/auth';
 import { storage } from '../utils/storage';
-import { User } from '../types/api';
+import type { User } from '../types/api';
 
 interface AuthContextType {
   user: User | null;

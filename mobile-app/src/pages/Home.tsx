@@ -5,7 +5,7 @@ import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import Header from '../components/Header';
 import CategoryTabs from '../components/CategoryTabs';
 import BottomNavigation from '../components/BottomNavigation';
-import { Product } from '../types/api';
+import type { Product } from '../types/api';
 import { useSearch } from '../contexts/SearchContext';
 
 const Home: React.FC = () => {
@@ -61,11 +61,11 @@ const Home: React.FC = () => {
 
         // Extract unique options for filter dropdowns
         const uniqueCategories = [...new Set(response.data.map((p: Product) => p.category))].sort();
-        const uniqueBrands = [...new Set(response.data.map((p: Product) => p.brand))].sort();
-        const uniqueSizes = [...new Set(response.data.map((p: Product) => p.size))].sort();
-        const uniqueColors = [...new Set(response.data.map((p: Product) => p.color))].sort();
+        const uniqueBrands = [...new Set(response.data.map((p: Product) => p.brand))].sort() as string[];
+        const uniqueSizes = [...new Set(response.data.map((p: Product) => p.size))].sort() as string[];
+        const uniqueColors = [...new Set(response.data.map((p: Product) => p.color))].sort() as string[];
 
-        setCategories(uniqueCategories);
+        setCategories(uniqueCategories as string[]);
         setBrands(uniqueBrands);
         setSizes(uniqueSizes);
         setColors(uniqueColors);
